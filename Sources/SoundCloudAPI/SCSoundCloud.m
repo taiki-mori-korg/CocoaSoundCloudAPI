@@ -93,9 +93,22 @@ NSString * const SCSoundCloudDidFailToRequestAccessNotification = @"SCSoundCloud
 + (SCAccount *)account;
 {    
     NSArray *oauthAccounts = [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:kSCAccountType];
-    if ([oauthAccounts count] > 0) {
+    if ([oauthAccounts count] > 0)
+    {
         return [[[SCAccount alloc] initWithOAuthAccount:[oauthAccounts objectAtIndex:0]] autorelease];
-    } else {
+    }
+    else
+    {
+        // anonymus account
+        NSArray *anonymusAccounts = [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:kSCAnonymusAccountType];
+        if ([anonymusAccounts count] > 0)
+        {
+            return [[[SCAccount alloc] initWithOAuthAccount:[anonymusAccounts objectAtIndex:0]] autorelease];
+        }
+        else
+        {
+            [[NXOAuth2AccountStore sharedStore] requestClientCredentialsAccessWithType:kSCAnonymusAccountType];
+        }
         return nil;
     }
 }
@@ -125,19 +138,35 @@ NSString * const SCSoundCloudDidFailToRequestAccessNotification = @"SCSoundCloud
              secret:(NSString *)aSecret
         redirectURL:(NSURL *)aRedirectURL;
 {
-    NSMutableDictionary *config = [NSMutableDictionary dictionary];
-    
-    [config setObject:aClientID forKey:kNXOAuth2AccountStoreConfigurationClientID];
-    [config setObject:aSecret forKey:kNXOAuth2AccountStoreConfigurationSecret];
-    [config setObject:aRedirectURL forKey:kNXOAuth2AccountStoreConfigurationRedirectURL];
+    // normal
+    {
+        NSMutableDictionary *config = [NSMutableDictionary dictionary];
+        
+        [config setObject:aClientID forKey:kNXOAuth2AccountStoreConfigurationClientID];
+        [config setObject:aSecret forKey:kNXOAuth2AccountStoreConfigurationSecret];
+        [config setObject:aRedirectURL forKey:kNXOAuth2AccountStoreConfigurationRedirectURL];
 
-    [config setObject:[NSURL URLWithString:kSCSoundCloudAuthURL] forKey:kNXOAuth2AccountStoreConfigurationAuthorizeURL];
-    [config setObject:[NSURL URLWithString:kSCSoundCloudAccessTokenURL] forKey:kNXOAuth2AccountStoreConfigurationTokenURL];
-    [config setObject:[NSURL URLWithString:kSCSoundCloudAPIURL] forKey:kSCConfigurationAPIURL];
-    
-    [[NXOAuth2AccountStore sharedStore] setConfiguration:config forAccountType:kSCAccountType];
+        [config setObject:[NSURL URLWithString:kSCSoundCloudAuthURL] forKey:kNXOAuth2AccountStoreConfigurationAuthorizeURL];
+        [config setObject:[NSURL URLWithString:kSCSoundCloudAccessTokenURL] forKey:kNXOAuth2AccountStoreConfigurationTokenURL];
+        [config setObject:[NSURL URLWithString:kSCSoundCloudAPIURL] forKey:kSCConfigurationAPIURL];
+        
+        [[NXOAuth2AccountStore sharedStore] setConfiguration:config forAccountType:kSCAccountType];
+    }
+    // anonymus
+    {
+        NSMutableDictionary *config = [NSMutableDictionary dictionary];
+        
+        [config setObject:aClientID forKey:kNXOAuth2AccountStoreConfigurationClientID];
+        [config setObject:aSecret forKey:kNXOAuth2AccountStoreConfigurationSecret];
+
+        [config setObject:[NSURL URLWithString:kSCSoundCloudAuthURL] forKey:kNXOAuth2AccountStoreConfigurationAuthorizeURL];
+        [config setObject:[NSURL URLWithString:kSCSoundCloudAccessTokenURL] forKey:kNXOAuth2AccountStoreConfigurationTokenURL];
+        [config setObject:[NSURL URLWithString:kSCSoundCloudAPIURL] forKey:kSCConfigurationAPIURL];
+        
+        [[NXOAuth2AccountStore sharedStore] setConfiguration:config forAccountType:kSCAnonymusAccountType];
+    }
+
 }
-
 
 #pragma mark OAuth2 Flow
 

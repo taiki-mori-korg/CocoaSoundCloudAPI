@@ -24,6 +24,7 @@
 #pragma mark OAuth2 Configuration
 
 NSString * const kSCAccountType = @"com.soundcloud.api";
+NSString * const kSCAnonymusAccountType = @"com.soundcloud.api.anonymus";
 
 NSString * const kSCConfigurationClientID = @"kSCConfigurationClientID";
 NSString * const kSCConfigurationSecret = @"kSCConfigurationSecret";

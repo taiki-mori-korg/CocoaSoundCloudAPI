@@ -45,35 +45,27 @@
 #pragma mark Configuration
 
 
-+ (NSDictionary *)configuration;
-{
-    NSDictionary *configuration = [[NXOAuth2AccountStore sharedStore] configurationForAccountType:kSCAccountType];
-    
-    NSMutableDictionary *config = [NSMutableDictionary dictionary];
-    
-    [config setObject:[configuration objectForKey:kNXOAuth2AccountStoreConfigurationClientID] forKey:kSCConfigurationClientID];
-    [config setObject:[configuration objectForKey:kNXOAuth2AccountStoreConfigurationSecret] forKey:kSCConfigurationSecret];
-    [config setObject:[configuration objectForKey:kNXOAuth2AccountStoreConfigurationRedirectURL] forKey:kSCConfigurationRedirectURL];
-    
-    [config setObject:[configuration objectForKey:kNXOAuth2AccountStoreConfigurationAuthorizeURL] forKey:kSCConfigurationAuthorizeURL];
-    
-    if ([[configuration objectForKey:kNXOAuth2AccountStoreConfigurationTokenURL] isEqual:[NSURL URLWithString:kSCSoundCloudSandboxAccessTokenURL]]) {
-        [config setObject:[NSNumber numberWithBool:YES] forKey:kSCConfigurationSandbox];
-    } else {
-        [config setObject:[NSNumber numberWithBool:NO] forKey:kSCConfigurationSandbox];
-    }
-    
-    [config setObject:[configuration objectForKey:kSCConfigurationAPIURL] forKey:kSCConfigurationAPIURL];
-    
-    return config;
-}
-
-#pragma mark Manage Accounts
-
-
-- (void)requestAccessWithUsername:(NSString *)username password:(NSString *)password;
-{
-    [[NXOAuth2AccountStore sharedStore] requestAccessToAccountWithType:kSCAccountType username:username password:password];
-}
+//+ (NSDictionary *)configuration;
+//{
+//    NSDictionary *configuration = [[NXOAuth2AccountStore sharedStore] configurationForAccountType:kSCAccountType];
+//    
+//    NSMutableDictionary *config = [NSMutableDictionary dictionary];
+//    
+//    [config setObject:[configuration objectForKey:kNXOAuth2AccountStoreConfigurationClientID] forKey:kSCConfigurationClientID];
+//    [config setObject:[configuration objectForKey:kNXOAuth2AccountStoreConfigurationSecret] forKey:kSCConfigurationSecret];
+//    [config setObject:[configuration objectForKey:kNXOAuth2AccountStoreConfigurationRedirectURL] forKey:kSCConfigurationRedirectURL];
+//    
+//    [config setObject:[configuration objectForKey:kNXOAuth2AccountStoreConfigurationAuthorizeURL] forKey:kSCConfigurationAuthorizeURL];
+//    
+//    if ([[configuration objectForKey:kNXOAuth2AccountStoreConfigurationTokenURL] isEqual:[NSURL URLWithString:kSCSoundCloudSandboxAccessTokenURL]]) {
+//        [config setObject:[NSNumber numberWithBool:YES] forKey:kSCConfigurationSandbox];
+//    } else {
+//        [config setObject:[NSNumber numberWithBool:NO] forKey:kSCConfigurationSandbox];
+//    }
+//    
+//    [config setObject:[configuration objectForKey:kSCConfigurationAPIURL] forKey:kSCConfigurationAPIURL];
+//    
+//    return config;
+//}
 
 @end

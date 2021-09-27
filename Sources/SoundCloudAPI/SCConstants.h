@@ -24,6 +24,7 @@
 #pragma mark OAuth2 Configuration
 
 extern NSString * const kSCAccountType;
+extern NSString * const kSCAnonymusAccountType;
 
 extern NSString * const kSCConfigurationClientID;
 extern NSString * const kSCConfigurationSecret;

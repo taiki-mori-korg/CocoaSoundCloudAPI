@@ -80,7 +80,7 @@ sendingProgressHandler:(SCRequestSendingProgressHandler)progressHandler
 - (void)performRequestWithSendingProgressHandler:(SCRequestSendingProgressHandler)progressHandler
                                  responseHandler:(SCRequestResponseHandler)responseHandler;
 
-#pragma Cancel Request
+#pragma mark Cancel Request
 
 - (void)cancel;
 

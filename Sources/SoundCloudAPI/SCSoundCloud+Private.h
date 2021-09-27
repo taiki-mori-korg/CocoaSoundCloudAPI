@@ -26,10 +26,6 @@
 
 #pragma mark Configuration
 
-+ (NSDictionary *)configuration;
-
-#pragma mark Manage Accounts
-
-- (void)requestAccessWithUsername:(NSString *)username password:(NSString *)password;
+//+ (NSDictionary *)configuration;
 
 @end
